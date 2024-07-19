@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const booking=require('../Models/Login')
-const veryfyTocken=require('../middleware/authmiddleware')
+const veryfyTocken=require('../Middleware/Authmiddleware')
 
 
 router.get("/", veryfyTocken,async (req, res) => {

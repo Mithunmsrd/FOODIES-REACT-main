@@ -1,6 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const AdminLogin = () => {
+const Userlogin = () => {
+
+      const [Email, setEmail] = useState("");
+      const [Password, setPassword] = useState("");
+      const navigate = useNavigate();
+  
+      const loginSubmit = async (e) => {
+          e.preventDefault();
+          const loginDetails = {
+              email,
+              password,
+          };
+  
+          const res = await fetch("/api/login", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(loginDetails),
+          });
+          console.log(res, "login res from /login");
+          if (res.ok) {
+              toast.success(`Logged in Sucessfully`);
+              return navigate("/home");
+  
+          } else {
+              toast.error(`Please check your credentials`);
+              return navigate("/");
+          }
+        }
   return (
     <div>
       <div class="bg-amber-300 flex items-center justify-center m-[100px]">
@@ -24,4 +56,17 @@ const AdminLogin = () => {
   )
 }
 
-export default AdminLogin
+const getUserType = () => {
+  const authToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("Authtoken"))
+    ?.split("=")[1];
+  console.log("documemnt.cookie vslue", authToken);
+
+  const decoded = jwtDecode(authToken);
+  console.log("decoded", decoded);
+return decoded
+};
+
+// eslint-disable-next-line react-refresh/only-export-components
+export {LoginPage as default, getUserType};

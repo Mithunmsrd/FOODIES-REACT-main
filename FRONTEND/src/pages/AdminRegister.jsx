@@ -1,6 +1,56 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const AdminRegister = () => {
+const SignupPage = () => {
+  const [Name, setName] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  // signup
+  const signupSubmit = async (userDetails) => {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userDetails),
+    });
+    // return;
+    console.log(res);
+    if (res.ok) {
+      toast.success(`Signup success`);
+      return navigate("/");
+    } else {
+      toast.error(`Please check the input data`);
+      return navigate("/signup");
+    }
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    const password = document.getElementById('password').value;
+    const confirmpassword = document.getElementById('confirm-password').value;
+
+    if(password.length < 6) {
+        document.getElementById('passwordError').textContent = 'Password is too short. It should be atleast 6 charecters'
+        return
+    }
+    
+    if(password!= confirmpassword) {
+        document.getElementById('confirmPasswordError').textContent = "Password do not match";
+        return
+    }
+    const userDetails = {
+      userName,
+      password,
+      email
+    };
+
+    signupSubmit(userDetails);
+  };
   return (
     <div>
       <div class="bg-amber-300 flex items-center justify-center h-screen">

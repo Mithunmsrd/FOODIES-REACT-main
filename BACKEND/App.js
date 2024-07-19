@@ -2,11 +2,11 @@ const express = require("express");
 const { mongoose } = require("mongoose");
 const app = express();
 const cors = require("cors");
-const routes = require("./routes/Userlogin");
+const routes = require("./route/login");
 
 const cookieParser = require("cookie-parser");
 
-const authRoute=require('./routes/login')
+const authRoute=require('./route/login')
 
 
 app.use(cookieParser())
@@ -28,7 +28,7 @@ const PORT = 5002;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-mongoose.connect("mongodb://localhost:27017/");
+mongoose.connect("mongodb://localhost:27017/food-booking");
 
 const database = mongoose.connection;
 
