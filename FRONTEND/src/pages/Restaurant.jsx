@@ -6,7 +6,7 @@ const Restaurant = () => {
         <div class="bg-amber-300">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <a href="/Food1"><div class="bg-white rounded-lg shadow-md p-6">
+            <a href="/Food1/o-cafe"><div class="bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-2">O Café</h2>
                 <p class="text-gray-600 mb-4">NH-Bypass, Venkalapattom, Anayara, Thiruvananthapuram</p>
                
