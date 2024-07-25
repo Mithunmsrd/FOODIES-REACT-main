@@ -1,30 +1,29 @@
-
 const express = require("express");
 const router = express.Router();
-const User = require("../Model/Login");
+const User = require("../model/Login");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // User registration
 router.post("/register", async (req, res) => {
-    try {
-      // const {} = userDetails
-      const userDetails = req.body;
-      const username = userDetails.userName;
-      const password = userDetails.password;
-      const email = userDetails.email;
+  try {
+    // const {} = userDetails
+    const userDetails = req.body;
+       const email = userDetails.Email;
+    const password = userDetails.Password;
+ 
    
-      // const { username, password } = req.body;
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({ username, password: hashedPassword, email});
-      await user.save();
-      res.status(201).json({ message: "User registered successfully" });
-    } catch (error) {
-      console.log("err", error);
-      res.status(500).json({ error: "Registration failed" });
-    }
-  });
+    // const { username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ username, password: hashedPassword, email, userType });
+    await user.save();
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    console.log("err", error);
+    res.status(500).json({ error: "Registration failed" });
+  }
+});
 
 // User login
 router.post("/login", async (req, res) => {
@@ -33,7 +32,7 @@ router.post("/login", async (req, res) => {
 
     console.log(email, password);
     const user = await User.findOne({ email });
-    // console.log(user, "user");
+    console.log(user, "user");
     if (!user) {
       return res
         .status(401)
@@ -45,6 +44,7 @@ router.post("/login", async (req, res) => {
         .status(401)
         .json({ error: "Authentication failed- password doesn't match" });
     }
+    
     const token = jwt.sign(
       { userId: user._id, userType: user.userType },
       "your-secret-key",
@@ -68,11 +68,11 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Logout
 router.get("/logout", (req, res) => {
   res.clearCookie("Authtoken");
   res.status(200).send("Logout successful");
-  // res.redirect('/')
   return res;
 });
 
-  module.exports = router;
+module.exports = router;

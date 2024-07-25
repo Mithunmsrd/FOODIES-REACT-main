@@ -6,7 +6,7 @@ const routes = require("./route/login");
 
 const cookieParser = require("cookie-parser");
 
-const authRoute=require('./route/login')
+const authRoute=require('./route/sign')
 
 
 app.use(cookieParser())
@@ -24,7 +24,7 @@ app.use(
 app.use("/", routes);
 app.use("/",authRoute)
 
-const PORT = 5002;
+const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

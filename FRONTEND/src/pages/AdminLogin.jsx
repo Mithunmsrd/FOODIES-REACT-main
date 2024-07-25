@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
-const Userlogin = () => {
+//import { toast } from "react-toastify";
+
+const AdminLogin = () => {
 
       const [Email, setEmail] = useState("");
       const [Password, setPassword] = useState("");
@@ -61,7 +62,7 @@ const getUserType = () => {
     .split("; ")
     .find((row) => row.startsWith("Authtoken"))
     ?.split("=")[1];
-  console.log("documemnt.cookie vslue", authToken);
+  console.log("documemnt.cookie value", authToken);
 
   const decoded = jwtDecode(authToken);
   console.log("decoded", decoded);
@@ -69,4 +70,4 @@ return decoded
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export {LoginPage as default, getUserType};
+export {AdminLogin as default, getUserType};
